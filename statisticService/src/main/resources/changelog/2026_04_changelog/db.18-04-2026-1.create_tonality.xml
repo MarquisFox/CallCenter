@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create_tonality_table" author="marquis">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tonality"/>
+            </not>
+        </preConditions>
+        <comment>Создание таблицы справочника тональностей</comment>
+        <createTable tableName="tonality">
+            <column name="id" type="SMALLINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name_ru" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert_tonality_data" author="marquis">
+        <comment>Наполнение справочника тональностей</comment>
+        <insert tableName="tonality">
+            <column name="id" valueNumeric="1"/>
+            <column name="code" value="positive"/>
+            <column name="name_ru" value="Позитивная"/>
+        </insert>
+        <insert tableName="tonality">
+            <column name="id" valueNumeric="2"/>
+            <column name="code" value="negative"/>
+            <column name="name_ru" value="Негативная"/>
+        </insert>
+        <insert tableName="tonality">
+            <column name="id" valueNumeric="3"/>
+            <column name="code" value="neutral"/>
+            <column name="name_ru" value="Нейтральная"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

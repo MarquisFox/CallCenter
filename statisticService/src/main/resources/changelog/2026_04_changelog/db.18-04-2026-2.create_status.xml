@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create_status_table" author="marquis">
+        <comment>Создание таблицы справочника статусов обработки звонка</comment>
+        <createTable tableName="status">
+            <column name="id" type="SMALLINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name_ru" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="insert_status_data" author="marquis">
+        <comment>Наполнение справочника статусов</comment>
+        <insert tableName="status">
+            <column name="id" valueNumeric="1"/>
+            <column name="code" value="created"/>
+            <column name="name_ru" value="Создан"/>
+        </insert>
+        <insert tableName="status">
+            <column name="id" valueNumeric="2"/>
+            <column name="code" value="sentiment_done"/>
+            <column name="name_ru" value="Тональность получена"/>
+        </insert>
+        <insert tableName="status">
+            <column name="id" valueNumeric="3"/>
+            <column name="code" value="gigachat_done"/>
+            <column name="name_ru" value="Оценка получена"/>
+        </insert>
+        <insert tableName="status">
+            <column name="id" valueNumeric="4"/>
+            <column name="code" value="completed"/>
+            <column name="name_ru" value="Завершён"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

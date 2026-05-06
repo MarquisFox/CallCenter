@@ -1,0 +1,66 @@
+server:
+  port: 8080
+  shutdown: graceful
+  servlet:
+    session:
+      timeout: 604800s
+      cookie:
+        max-age: 604800s
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+dev-auth: true
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:statisticservice}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:changelog/db.changelog-master.xml
+    drop-first: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+    consumer:
+      group-id: statistics_service_group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.type.mapping: "callRegistration:ru.vinpin.statisticservice.dto.kafka.CallRegistrationMessage,sentimentOutput:ru.vinpin.statisticservice.dto.kafka.SentimentOutputMessage,gigachatOutput:ru.vinpin.statisticservice.dto.kafka.GigachatOutputMessage"
+    listener:
+      ack-mode: manual_immediate
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+retry:
+  max-attempts: ${RETRY_MAX_ATTEMPTS:5}
+  backoff-ms: ${RETRY_BACKOFF_MS:1000}
+  backoff-multiplier: ${RETRY_BACKOFF_MULTIPLIER:2.0}
+  max-delay-ms: ${RETRY_MAX_DELAY_MS:60000}

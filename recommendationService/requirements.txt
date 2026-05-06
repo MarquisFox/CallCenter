@@ -1,0 +1,7 @@
+kafka-python==2.3.0
+pydantic==2.12.5
+gigachat==0.2.0
+pytest==7.4.0
+testcontainers==4.4.0
+pytest-mock
+redis==5.0.0

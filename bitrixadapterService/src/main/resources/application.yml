@@ -1,0 +1,22 @@
+spring:
+  main:
+    web-application-type: servlet
+server:
+  port: ${SERVER_PORT:8081}
+
+kafka:
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+  topic:
+    call-registration: ${KAFKA_TOPIC_CALL_REGISTRATION:call.registration}
+  producer:
+    acks: ${KAFKA_PRODUCER_ACKS:all}
+    retries: ${KAFKA_PRODUCER_RETRIES:5}
+    idempotence: ${KAFKA_PRODUCER_IDEMPOTENCE:true}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+statistics:
+  service:
+    url: ${STATISTICS_SERVICE_URL:http://statistics-service:8082/api/v1}

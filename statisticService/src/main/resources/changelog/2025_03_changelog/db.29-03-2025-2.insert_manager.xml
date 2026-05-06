@@ -1,0 +1,73 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"-->
+<!--                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-->
+<!--                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">-->
+
+<!--    &lt;!&ndash; Женщины &ndash;&gt;-->
+<!--    <changeSet id="29-03-2025-2.1" author="HarrowX">-->
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="1" />-->
+<!--            <column name="name" value="Иванова Анна Павловна" />-->
+<!--            <column name="post_id" value="1" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="2" />-->
+<!--            <column name="name" value="Петрова Елена Владимировна" />-->
+<!--            <column name="post_id" value="2" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="3" />-->
+<!--            <column name="name"  value="Сидорова Ольга Игоревна" />-->
+<!--            <column name="post_id" value="3" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="4" />-->
+<!--            <column name="name" value="Кузнецова Мария Сергеевна" />-->
+<!--            <column name="post_id" value="1" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="5" />-->
+<!--            <column name="name" value="Смирнова Дарья Александровна"/>-->
+<!--            <column name="post_id" value="2"/>-->
+<!--        </insert>-->
+<!--    </changeSet>-->
+
+
+<!--    &lt;!&ndash; Мужчины &ndash;&gt;-->
+<!--    <changeSet id="29-03-2025-2.2" author="HarrowX">-->
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="6" />-->
+<!--            <column name="name" value="Иванов Дмитрий Петрович" />-->
+<!--            <column name="post_id" value="3" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="7" />-->
+<!--            <column name="name" value="Петров Алексей Викторович" />-->
+<!--            <column name="post_id" value="1" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="8" />-->
+<!--            <column name="name" value="Сидоров Артем Олегович" />-->
+<!--            <column name="post_id" value="2" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="9" />-->
+<!--            <column name="name" value="Кузнецов Андрей Николаевич" />-->
+<!--            <column name="post_id" value="3" />-->
+<!--        </insert>-->
+
+<!--        <insert tableName="manager">-->
+<!--            <column name="id" value="10" />-->
+<!--            <column name="name" value="Смирнов Павел Дмитриевич" />-->
+<!--            <column name="post_id" value="1" />-->
+<!--        </insert>-->
+<!--    </changeSet>-->
+<!--</databaseChangeLog>-->

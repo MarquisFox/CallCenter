@@ -1,0 +1,31 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    g++ \
+    build-essential \
+    python3-dev \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir numpy==1.23.5
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir pybind11 setuptools wheel && \
+    git clone https://github.com/facebookresearch/fastText.git && \
+    cd fastText && \
+    sed -i '/#include <unordered_map>/a #include <cstdint>' src/args.cc && \
+    pip install . && \
+    cd .. && rm -rf fastText
+
+RUN sed -i 's/np.array(probs, copy=False)/np.asarray(probs)/g' /usr/local/lib/python3.9/site-packages/fasttext/FastText.py
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY fasttext-social-network-model.bin .
+COPY *.py .
+
+CMD ["python", "main.py"]

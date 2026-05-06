@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <include relativeToChangelogFile="true" file="db.18-04-2026-1.create_tonality.xml"/>
+    <include relativeToChangelogFile="true" file="db.18-04-2026-2.create_status.xml"/>
+    <include relativeToChangelogFile="true" file="db.18-04-2026-3.create_checklist_item.xml"/>
+
+    <include relativeToChangelogFile="true" file="db.18-04-2026-4.create_manager.xml"/>
+    <include relativeToChangelogFile="true" file="db.18-04-2026-5.create_call.xml"/>
+    <include relativeToChangelogFile="true" file="db.18-04-2026-6.create_call_checklist_result.xml"/>
+
+    <include relativeToChangelogFile="true" file="db.18-04-2026-7.create_manager_stats.xml"/>
+
+</databaseChangeLog>

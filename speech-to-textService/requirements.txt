@@ -1,0 +1,8 @@
+kafka-python==2.3.0
+pydantic==2.12.5
+openai-whisper==20250625
+minio==7.2.20
+pytest==7.4.0
+testcontainers==4.4.0
+pyfakefs
+redis==5.0.0

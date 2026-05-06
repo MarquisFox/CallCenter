@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+    <changeSet author="MarquisFox" id="28-03-2025-5.1" logicalFilePath="db.28-03-2025-5.create_call.xml">
+        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="28-03-2025-5.2" logicalFilePath="db.28-03-2025-5.create_call.xml" author="MarquisFox">
+        <createTable tableName="call">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="manager_id" type="BIGINT">
+            </column>
+            <column name="call_name" type="varchar(400)">
+            </column>
+            <column name="status_id" type="BIGINT">
+            </column>
+            <column name="tonality_id" type="BIGINT">
+            </column>
+            <column name="recommendation_result" type="varchar(40000)"/>
+            <column name="penalty_points" type="INT"/>
+            <column name="date" type="DATE"/>
+            <column name="duration" type="BIGINT"/>
+        </createTable>
+        <addUniqueConstraint
+                tableName="call"
+                columnNames="call_name"
+                constraintName="unique_call_name" />
+    </changeSet>
+    <changeSet id="28-03-2025-5.3" logicalFilePath="db.28-03-2025-5.create_call.xml" author="MarquisFox">
+        <addForeignKeyConstraint baseTableName="call" baseColumnNames="manager_id"
+                                 constraintName="fk_call_manager"
+                                 referencedTableName="manager" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="call" baseColumnNames="status_id"
+                                 constraintName="fk_call_status"
+                                 referencedTableName="status" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="call" baseColumnNames="tonality_id"
+                                 constraintName="fk_call_tonality"
+                                 referencedTableName="tonality" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

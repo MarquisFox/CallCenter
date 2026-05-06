@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="29-03-2025-4.1" author="HarrowX">
+        <!-- Позитивная тональность -->
+        <insert tableName="tonality">
+            <column name="id" value="1" />
+            <column name="code" value="POSITIVE" />
+            <column name="text" value="Позитивная" />
+        </insert>
+
+        <!-- Нейтральная тональность -->
+        <insert tableName="tonality">
+            <column name="id" value="2" />
+            <column name="code" value="NEUTRAL" />
+            <column name="text" value="Нейтральная" />
+        </insert>
+
+        <!-- Негативная тональность -->
+        <insert tableName="tonality">
+            <column name="id" value="3" />
+            <column name="code" value="NEGATIVE" />
+            <column name="text" value="Негативная" />
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

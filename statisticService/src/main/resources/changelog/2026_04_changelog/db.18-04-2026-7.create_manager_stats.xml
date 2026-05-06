@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="create_manager_stats_table" author="marquis">
+        <comment>Создание таблицы агрегированной статистики по менеджерам</comment>
+        <createTable tableName="manager_stats">
+            <column name="manager_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_manager_stats_manager" references="manager(id)"/>
+            </column>
+            <column name="total_calls" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avg_rating" type="DECIMAL(3,2)"/>
+            <column name="avg_error_rate" type="DECIMAL(5,4)"/>
+            <column name="last_updated" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
