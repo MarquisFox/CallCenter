@@ -8,9 +8,7 @@ class AudioProcessor:
         self.model = whisper.load_model(model_size)
 
     def process_audio_from_url(self, file_url: str) -> str:
-        """
-        Скачивает аудио по presigned URL и возвращает транскрипт.
-        """
+
         local_path = None
         try:
             local_path = download_audio(file_url)

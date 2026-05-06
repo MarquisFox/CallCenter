@@ -2,7 +2,7 @@ import json
 import time
 import logging
 from datetime import datetime
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaConsumer, KafkaProducer, TopicPartition
 import config
 from models import InputMessage, OutputMessage
 from redis_client import get_redis_client
@@ -68,27 +68,19 @@ class KafkaService:
         self.running = False
 
     def run(self, processor_func):
-        """
-        Основной цикл обработки сообщений с ретраями и DLQ.
-        Состояние ретраев хранится в Redis.
-        """
         while self.running:
             msgs = self.consumer.poll(timeout_ms=1000)
-            for topic_partition, records in msgs.items():
+            for tp, records in msgs.items():
                 for msg in records:
                     if not self.running:
                         break
+                    partition = tp.partition
+                    offset = msg.offset
                     call_id = msg.key
                     if call_id is None:
                         call_id = msg.value.get("callId", "unknown")
-                    try:
-                        # Проверяем, не исчерпаны ли уже попытки (чтобы не обрабатывать заново)
-                        attempt = self._get_retry_count(call_id)
-                        if attempt >= config.MAX_RETRIES:
-                            # Пропускаем, уже в DLQ (но на всякий случай)
-                            self.consumer.commit()
-                            continue
 
+                    try:
                         input_msg = InputMessage(**msg.value)
                         transcript = processor_func(input_msg.fileUrl)
                         output = OutputMessage(callId=input_msg.callId, transcript=transcript)
@@ -97,6 +89,7 @@ class KafkaService:
                         self.consumer.commit()
                         self._clear_retry_count(call_id)
                         logger.info(f"Processed {call_id} successfully")
+
                     except Exception as e:
                         attempt = self._increment_retry_count(call_id)
                         if attempt <= config.MAX_RETRIES:
@@ -107,6 +100,7 @@ class KafkaService:
                             logger.error(f"Error processing {call_id}, attempt {attempt}/{config.MAX_RETRIES}, "
                                          f"backoff {backoff}s: {e}")
                             time.sleep(backoff)
+                            self.consumer.seek(TopicPartition(msg.topic, partition), offset)
                         else:
                             logger.error(f"Max retries exceeded for {call_id}, sending to DLQ")
                             self._send_to_dlq(msg.value, str(e), call_id)

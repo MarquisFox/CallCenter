@@ -15,7 +15,7 @@ def get_redis_client():
             db=config.REDIS_DB,
             decode_responses=True
         )
-        # Проверяем подключение
+
         try:
             _redis_client.ping()
         except Exception as e:

@@ -32,7 +32,6 @@ def shutdown_handler(signum, frame):
 
 def main():
     global kafka_service
-    # Запускаем healthcheck в отдельном потоке
     health_thread = threading.Thread(target=run_healthcheck, daemon=True)
     health_thread.start()
 

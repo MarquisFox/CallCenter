@@ -6,10 +6,7 @@ def ensure_directory_exists(directory_path: str) -> None:
 
 
 def copy_file_for_processing(original_path: str, processing_dir: str) -> str:
-    """
-    Копирует файл в директорию для обработки
-    Возвращает путь к скопированному файлу
-    """
+
     ensure_directory_exists(processing_dir)
 
     file_name = os.path.basename(original_path)

@@ -2,7 +2,7 @@ import json
 import time
 import logging
 from datetime import datetime
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaConsumer, KafkaProducer, TopicPartition
 import config
 from models import InputMessage, OutputMessage
 from redis_client import get_redis_client
@@ -69,10 +69,12 @@ class KafkaService:
     def run(self, processor_func):
         while self.running:
             msgs = self.consumer.poll(timeout_ms=1000)
-            for topic_partition, records in msgs.items():
+            for tp, records in msgs.items():
                 for msg in records:
                     if not self.running:
                         break
+                    partition = tp.partition
+                    offset = msg.offset
                     call_id = msg.key
                     if call_id is None:
                         try:
@@ -81,11 +83,6 @@ class KafkaService:
                             call_id = 'unknown'
 
                     try:
-                        attempt = self._get_retry_count(call_id)
-                        if attempt >= config.MAX_RETRIES:
-                            self.consumer.commit()
-                            continue
-
                         input_data = InputMessage(**msg.value)
                         tonality = processor_func(input_data)
                         self.send_result(call_id, tonality)
@@ -105,7 +102,7 @@ class KafkaService:
                                 f"backoff {backoff}s: {e}"
                             )
                             time.sleep(backoff)
-                            # не коммитим сообщение
+                            self.consumer.seek(TopicPartition(msg.topic, partition), offset)
                         else:
                             logger.error(f"Max retries exceeded for {call_id}, sending to DLQ")
                             self._send_to_dlq(msg.value, str(e), call_id)

@@ -59,7 +59,6 @@ class GigaChatService:
 
         response = raw_response.strip()
 
-        # Удаляем markdown-обёртки
         if response.startswith("```json"):
             response = response[7:].strip()
         if response.startswith("```"):
@@ -97,7 +96,6 @@ class GigaChatService:
 
             completed = bool(item_data.get("completed", False))
             penalty = int(item_data.get("penalty", 0))
-            # Ограничиваем penalty максимальным значением
             max_penalty = next((item['max_penalty'] for item in self.checklist_items if item['code'] == code), 0)
 
             if penalty < 0:
@@ -117,13 +115,11 @@ class GigaChatService:
             ))
             total_penalty += penalty
 
-        # Проверка, что все пункты присутствуют
         if len(items) != len(expected_codes):
             raise InvalidGigaChatResponseError(
                 f"Неполный набор пунктов: ожидалось {len(expected_codes)}, получено {len(items)} для {call_id}"
             )
 
-        # ВАЖНО: Мы не доверяем errorRate от GigaChat, а вычисляем сами
         if self.max_total_penalty > 0:
             computed_error_rate = total_penalty / self.max_total_penalty
             computed_error_rate = round(computed_error_rate, 2)
