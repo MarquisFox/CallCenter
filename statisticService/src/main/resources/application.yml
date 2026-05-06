@@ -13,6 +13,12 @@ springdoc:
 
 dev-auth: true
 
+kafka:
+  topics:
+    call-registration: ${CALL_REGISTRATION_TOPIC:call.registration}
+    tonality-output: ${TONALITY_OUTPUT_TOPIC:tonality.analysis.output}
+    recommendation-output: ${RECOMMENDATION_OUTPUT_TOPIC:recommendation.analysis.output}
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver

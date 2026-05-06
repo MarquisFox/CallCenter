@@ -12,10 +12,7 @@ import ru.vinpin.statisticservice.services.CallService;
 public class TonalityOutputListener {
     private final CallService callService;
 
-    @KafkaListener(
-            topics = "tonality.analysis.output",
-            containerFactory = "sentimentOutputListenerContainerFactory"
-    )
+    @KafkaListener(topics = "${kafka.topics.tonality-output}", containerFactory = "sentimentOutputListenerContainerFactory")
     public void handleTonalityOutput(SentimentOutputMessage dto, Acknowledgment ack) {
         callService.updateTonality(dto);
         ack.acknowledge();

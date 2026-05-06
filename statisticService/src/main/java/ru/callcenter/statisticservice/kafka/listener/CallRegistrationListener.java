@@ -12,10 +12,7 @@ import ru.vinpin.statisticservice.services.CallService;
 public class CallRegistrationListener {
     private final CallService callService;
 
-    @KafkaListener(
-            topics = "call.registration",
-            containerFactory = "callRegistrationListenerContainerFactory"
-    )
+    @KafkaListener(topics = "${kafka.topics.call-registration}", containerFactory = "callRegistrationListenerContainerFactory")
     public void handleCallRegistration(CallRegistrationMessage dto, Acknowledgment ack) {
         callService.createCall(dto);
         ack.acknowledge();

@@ -12,10 +12,7 @@ import ru.vinpin.statisticservice.services.CallService;
 public class RecommendationOutputListener {
     private final CallService callService;
 
-    @KafkaListener(
-            topics = "recommendation.analysis.output",
-            containerFactory = "gigachatOutputListenerContainerFactory"
-    )
+    @KafkaListener(topics = "${kafka.topics.recommendation-output}", containerFactory = "gigachatOutputListenerContainerFactory")
     public void handleRecommendationOutput(GigachatOutputMessage dto, Acknowledgment ack) {
         callService.updateGigachatResult(dto);
         ack.acknowledge();
