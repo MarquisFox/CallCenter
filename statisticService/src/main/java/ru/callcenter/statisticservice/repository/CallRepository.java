@@ -61,8 +61,6 @@ public interface CallRepository extends JpaRepository<CallEntity, Long>,
     @Query("SELECT c FROM CallEntity c JOIN FETCH c.manager m LEFT JOIN FETCH c.tonality t ORDER BY c.date DESC")
     Page<CallEntity> findAllWithManagerAndTonality(Pageable pageable);
 
-    // Методы с динамическими фильтрами теперь через Specification,
-    // но чтобы сразу подгружать tonality, объявим кастомный метод с EntityGraph
     @EntityGraph(attributePaths = {"tonality"})
     List<CallEntity> findAll(Specification<CallEntity> spec, Sort sort);
 }
