@@ -28,7 +28,6 @@ def shutdown_handler(signum, frame):
     logger.info(f"Received signal {signum}, shutting down...")
     if kafka_service:
         kafka_service.stop()
-    # Принудительно выходим через некоторое время
     threading.Timer(5.0, lambda: exit(0)).start()
 
 def main():
