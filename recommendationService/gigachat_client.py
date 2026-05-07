@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class InvalidGigaChatResponseError(ValueError):
-    """Исключение для невалидных ответов GigaChat"""
+    
     pass
 
 
